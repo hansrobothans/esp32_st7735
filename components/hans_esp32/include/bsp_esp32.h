@@ -22,6 +22,6 @@
 
 
 // 功能支持库
-#include "bsp_st7735.h"
+
 
 #endif//ESP32_H

@@ -55,10 +55,39 @@ menu "TFT Configuration"
         help
             When your TFT have offset(Y), set it.
 
+
+    config MOSI_GPIO
+        int "MOSI GPIO number"
+        range 0 34
+        default 23
+        help
+            GPIO number (IOxx) to SPI MOSI.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to MOSI.
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+    config MISO_GPIO
+        int "MISO GPIO number"
+        range 0 34
+        default -1
+        help
+            GPIO number (IOxx) to SPI MSIO.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to MISO.
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+
+    config SCLK_GPIO
+        int "SCLK GPIO number"
+        range 0 34
+        default 22
+        help
+            GPIO number (IOxx) to SPI SCLK.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to SCLK.
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
     config CS_GPIO
         int "CS GPIO number"
         range 0 34
-        default 5
+        default 21
         help
             GPIO number (IOxx) to SPI CS.
             Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to CS.
@@ -67,7 +96,7 @@ menu "TFT Configuration"
     config DC_GPIO
         int "DC GPIO number"
         range 0 34
-        default 26
+        default 18
         help
             GPIO number (IOxx) to SPI DC.
             Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
@@ -76,7 +105,7 @@ menu "TFT Configuration"
     config RESET_GPIO
         int "RESET GPIO number"
         range -1 34
-        default 2
+        default 19
         help
             GPIO number (IOxx) to RESET.
             When it is -1, the RESET isn't performed.
@@ -86,7 +115,7 @@ menu "TFT Configuration"
     config BL_GPIO
         int "BACKLIGHT GPIO number"
         range -1 34
-        default -1
+        default 5
         help
             GPIO number (IOxx) to BACKLIGHT.
             When it is -1, BACKLIGHT isn't performed.

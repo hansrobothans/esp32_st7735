@@ -1,5 +1,0 @@
-source "/home/hans/esp/esp-idf/components/app_update/Kconfig.projbuild"
-source "/home/hans/esp/esp-idf/components/bootloader/Kconfig.projbuild"
-source "/home/hans/esp/esp-idf/components/esptool_py/Kconfig.projbuild"
-source "/home/hans/git/ESP32/esp32_tft/components/hans_tft/Kconfig.projbuild"
-source "/home/hans/esp/esp-idf/components/partition_table/Kconfig.projbuild"

@@ -12,4 +12,4 @@ include $(IDF_PATH)/make/project.mk
 # the generated image should be flashed when the entire project is flashed to
 # the target with 'make flash'.
 SPIFFS_IMAGE_FLASH_IN_PROJECT := 1
-$(eval $(call spiffs_create_partition_image,storage,font))
+$(eval $(call spiffs_create_partition_image,storage,./components/font))

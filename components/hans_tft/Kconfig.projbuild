@@ -25,6 +25,10 @@ menu "TFT Configuration"
             bool "ST7735"
             help
                 Display Driver is ST7735.
+        config ST7789V
+            bool "ST7789V"
+            help
+                Display Driver is ST7789V.
     endchoice
 
     config WIDTH
@@ -55,6 +59,13 @@ menu "TFT Configuration"
         help
             When your TFT have offset(Y), set it.
 
+    config OFFSETAngle
+        int "GRAM ANGLE OFFSET"
+        range 0 90
+        default 0
+        help
+            When your TFT have offset(ANGLE), set it.
+
 
     config MOSI_GPIO
         int "MOSI GPIO number"
@@ -67,7 +78,7 @@ menu "TFT Configuration"
 
     config MISO_GPIO
         int "MISO GPIO number"
-        range 0 34
+        range -1 34
         default -1
         help
             GPIO number (IOxx) to SPI MSIO.

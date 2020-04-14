@@ -8,7 +8,10 @@
 
 #include "fontx.h"
 
-#define FontxDebug 0 // for Debug
+#include "tftspi.h"
+#include "tft.h"
+
+#define FontxDebug 1 // for Debug
 
 // フォントファイルパスを構造体に保存
 void AddFontx(FontxFile *fx, const char *path)
@@ -47,6 +50,11 @@ bool OpenFontx(FontxFile *fx)
 			fclose(fx->file);
 			return fx->valid ;
 		}
+		for (int i = 0; i < 10; ++i)
+		{
+			printf("\n");
+		}
+		
 
 		if(FontxDebug) {
 			for(int i=0;i<sizeof(buf);i++) {
@@ -105,103 +113,14 @@ uint8_t getFortHeight(FontxFile *fx) {
 	return(fx->h);
 }
 
-
-/*
- フォントファイルからフォントパターンを取り出す
-
- フォントの並び(16X16ドット)
-    00000000    01111111
-    12345678    90123456
- 01 pGlyph[000] pGlyph[001]
- 02 pGlyph[002] pGlyph[003]
- 03 pGlyph[004] pGlyph[005]
- 04 pGlyph[006] pGlyph[007]
- 05 pGlyph[008] pGlyph[009]
- 06 pGlyph[010] pGlyph[011]
- 07 pGlyph[012] pGlyph[013]
- 08 pGlyph[014] pGlyph[015]
- 09 pGlyph[016] pGlyph[017]
- 10 pGlyph[018] pGlyph[019]
- 11 pGlyph[020] pGlyph[021]
- 12 pGlyph[022] pGlyph[023]
- 13 pGlyph[024] pGlyph[025]
- 14 pGlyph[026] pGlyph[027]
- 15 pGlyph[028] pGlyph[029]
- 16 pGlyph[030] pGlyph[031]
-
- フォントの並び(24X24ドット)
-    00000000    01111111    11122222
-    12345678    90123456    78901234
- 01 pGlyph[000] pGlyph[001] pGlyph[002]
- 02 pGlyph[003] pGlyph[004] pGlyph[005]
- 03 pGlyph[006] pGlyph[007] pGlyph[008]
- 04 pGlyph[009] pGlyph[010] pGlyph[011]
- 05 pGlyph[012] pGlyph[013] pGlyph[014]
- 06 pGlyph[015] pGlyph[016] pGlyph[017]
- 07 pGlyph[018] pGlyph[019] pGlyph[020]
- 08 pGlyph[021] pGlyph[022] pGlyph[023]
- 09 pGlyph[024] pGlyph[025] pGlyph[026]
- 10 pGlyph[027] pGlyph[028] pGlyph[029]
- 11 pGlyph[030] pGlyph[031] pGlyph[032]
- 12 pGlyph[033] pGlyph[034] pGlyph[035]
- 13 pGlyph[036] pGlyph[037] pGlyph[038]
- 14 pGlyph[039] pGlyph[040] pGlyph[041]
- 15 pGlyph[042] pGlyph[043] pGlyph[044]
- 16 pGlyph[045] pGlyph[046] pGlyph[047]
- 17 pGlyph[048] pGlyph[049] pGlyph[050]
- 18 pGlyph[051] pGlyph[052] pGlyph[053]
- 19 pGlyph[054] pGlyph[055] pGlyph[056]
- 20 pGlyph[057] pGlyph[058] pGlyph[059]
- 21 pGlyph[060] pGlyph[061] pGlyph[062]
- 22 pGlyph[063] pGlyph[064] pGlyph[065]
- 23 pGlyph[066] pGlyph[067] pGlyph[068]
- 24 pGlyph[069] pGlyph[070] pGlyph[071]
-
- フォントの並び(32X32ドット)
-    00000000    01111111    11122222    22222333
-    12345678    90123456    78901234    56789012
- 01 pGlyph[000] pGlyph[001] pGlyph[002] pGlyph[003]
- 02 pGlyph[004] pGlyph[005] pGlyph[006] pGlyph[007]
- 03 pGlyph[008] pGlyph[009] pGlyph[010] pGlyph[011]
- 04 pGlyph[012] pGlyph[013] pGlyph[014] pGlyph[015]
- 05 pGlyph[016] pGlyph[017] pGlyph[018] pGlyph[019]
- 06 pGlyph[020] pGlyph[021] pGlyph[022] pGlyph[023]
- 07 pGlyph[024] pGlyph[025] pGlyph[026] pGlyph[027]
- 08 pGlyph[028] pGlyph[029] pGlyph[030] pGlyph[031]
- 09 pGlyph[032] pGlyph[033] pGlyph[034] pGlyph[035]
- 10 pGlyph[036] pGlyph[037] pGlyph[038] pGlyph[039]
- 11 pGlyph[040] pGlyph[041] pGlyph[042] pGlyph[043]
- 12 pGlyph[044] pGlyph[045] pGlyph[046] pGlyph[047]
- 13 pGlyph[048] pGlyph[049] pGlyph[050] pGlyph[051]
- 14 pGlyph[052] pGlyph[053] pGlyph[054] pGlyph[055]
- 15 pGlyph[056] pGlyph[057] pGlyph[058] pGlyph[059]
- 16 pGlyph[060] pGlyph[061] pGlyph[062] pGlyph[063]
- 17 pGlyph[064] pGlyph[065] pGlyph[066] pGlyph[067]
- 18 pGlyph[068] pGlyph[069] pGlyph[070] pGlyph[071]
- 19 pGlyph[072] pGlyph[073] pGlyph[074] pGlyph[075]
- 20 pGlyph[076] pGlyph[077] pGlyph[078] pGlyph[079]
- 21 pGlyph[080] pGlyph[081] pGlyph[082] pGlyph[083]
- 22 pGlyph[084] pGlyph[085] pGlyph[086] pGlyph[087]
- 23 pGlyph[088] pGlyph[089] pGlyph[090] pGlyph[091]
- 24 pGlyph[092] pGlyph[093] pGlyph[094] pGlyph[095]
- 25 pGlyph[096] pGlyph[097] pGlyph[098] pGlyph[099]
- 26 pGlyph[100] pGlyph[101] pGlyph[102] pGlyph[103]
- 27 pGlyph[104] pGlyph[105] pGlyph[106] pGlyph[107]
- 28 pGlyph[108] pGlyph[109] pGlyph[110] pGlyph[111]
- 29 pGlyph[112] pGlyph[113] pGlyph[114] pGlyph[115]
- 30 pGlyph[116] pGlyph[117] pGlyph[118] pGlyph[119]
- 31 pGlyph[120] pGlyph[121] pGlyph[122] pGlyph[123]
- 32 pGlyph[124] pGlyph[125] pGlyph[127] pGlyph[128]
-
-*/
-
 bool GetFontx(FontxFile *fxs, uint8_t ascii , uint8_t *pGlyph, uint8_t *pw, uint8_t *ph)
 {
   
 	int i;
 	uint32_t offset;
 
-	if(FontxDebug)printf("[GetFontx]ascii=0x%x\n",ascii);
+	if(FontxDebug)
+		printf("[GetFontx]ascii=0x%x\n",ascii);
 	for(i=0; i<2; i++){
 	//for(i=0; i<1; i++){
 		if(!OpenFontx(&fxs[i])) continue;

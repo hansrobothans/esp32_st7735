@@ -1,5 +1,12 @@
 #ifndef MAIN_FONTX_H_
 #define MAIN_FONTX_H_
+
+#if CONFIG_BSP_ESP_SD_ENABLE
+#include "bsp_sd_card.h"
+#endif
+
+
+
 #define FontxGlyphBufSize (32*32/8)
 
 typedef struct {
